@@ -16,7 +16,9 @@ async function get() {
 
     let contentEl = $(e).find('p').first();
     contentEl.find('em').remove();
-    let content = contentEl.text().trim();
+    let content = contentEl.text()
+      .replace("Hinweis: Um sich diesen Artikel vorlesen zu lassen, klicken Sie auf den Player im Artikel.", '')
+      .trim();
 
     let href = $(e).find('a')[0].attribs.href;
 
