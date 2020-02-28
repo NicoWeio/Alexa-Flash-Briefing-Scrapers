@@ -5,7 +5,7 @@ const GOLEM = require('./golem');
 
 app.get('/golem/', async (req, res) => {
   let r = await GOLEM();
-  res.send(r);
+  res.json(r);
 });
 
 app.listen(process.env.PORT || 8000);

@@ -39,7 +39,7 @@ async function get() {
     };
   });
 
-  return JSON.stringify(feedItems);
+  return feedItems;
 }
 
 module.exports = get;
