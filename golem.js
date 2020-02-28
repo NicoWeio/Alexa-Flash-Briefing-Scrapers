@@ -22,17 +22,23 @@ async function get() {
 
     let href = $(e).find('a')[0].attribs.href;
 
+    // visit article to check date
+    let articleHtml = await rp(href);
+    // full path: '#screen > div:nth-child(2) > article > header > div.authors.authors--withsource > time'
+    let datetime = $('time', articleHtml).attr('datetime');
+
     items.push({
       heading,
       content,
-      href
+      href,
+      datetime,
     });
   }
 
   let feedItems = items.map(item => {
     return {
       uid: item.heading,
-      updateDate: (new Date().toISOString()),
+      updateDate: item.datetime,
       titleText: item.heading,
       mainText: item.heading + ": " + item.content,
       redirectionUrl: item.href
