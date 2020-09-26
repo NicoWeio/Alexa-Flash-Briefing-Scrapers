@@ -43,15 +43,17 @@ async function get() {
     });
   }
 
-  let feedItems = items.map(item => {
-    return {
-      uid: item.heading,
-      updateDate: item.datetime,
-      titleText: item.heading,
-      mainText: item.heading + ": " + item.content,
-      redirectionUrl: item.href
-    };
-  });
+  let feedItems = items
+    .map(item => {
+      return {
+        uid: item.heading,
+        updateDate: item.datetime,
+        titleText: item.heading,
+        mainText: item.heading + ": " + item.content,
+        redirectionUrl: item.href,
+      };
+    })
+    .filter(feedItem => !["Sonst noch was?"].includes(feedItem.titleText));
 
   return feedItems;
 }
