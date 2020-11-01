@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1.4.3
+      - uses: actions/setup-node@v1
 
       - name: Install dependencies
         run: npm install
@@ -19,7 +19,7 @@ jobs:
         run: zip -r deployment.zip *
 
       - name: Deploy to AWS Lambda
-        uses: appleboy/lambda-action@v0.0.4
+        uses: appleboy/lambda-action@v0.0.8
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
