@@ -5,7 +5,7 @@ const URL = 'https://golem.de';
 async function request(url) {
   return (await Axios(url, {
     headers: {
-      'Cookie': 'golem_consent20=cmp|200801',
+      'Cookie': 'golem_consent20=cmp|210127',
     },
     timeout: 10000,
   })).data;
@@ -15,7 +15,7 @@ async function get() {
   let html = await request(URL);
   let elements = $('.list-articles li', html);
   let elementsToScrape = elements.slice(0, 5).get();
-  let items = await Promise.all(elementsToScrape.map(async e => getSingle(e)));
+  let items = await Promise.all(elementsToScrape.map(getSingle));
 
   let feedItems = items
     .map(item => {
@@ -28,6 +28,10 @@ async function get() {
       };
     })
     .filter(feedItem => !["Sonst noch was?"].includes(feedItem.titleText));
+
+    if (!feedItems.length) {
+    	throw new Error('No articles found');
+    }
 
   return feedItems;
 }
