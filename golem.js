@@ -5,7 +5,7 @@ const URL = 'https://golem.de';
 async function request(url) {
   return (await Axios(url, {
     headers: {
-      'Cookie': 'golem_consent20=cmp|210127',
+      'Cookie': 'golem_consent20=cmp|210630',
     },
     timeout: 10000,
   })).data;
