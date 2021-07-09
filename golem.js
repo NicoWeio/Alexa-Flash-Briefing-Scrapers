@@ -1,5 +1,5 @@
 const Axios = require('axios');
-const $ = require('cheerio');
+const $ = require('cheerio').default;
 const URL = 'https://golem.de';
 
 async function request(url) {
