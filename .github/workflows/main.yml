@@ -13,10 +13,12 @@ jobs:
       - uses: actions/setup-node@v1
 
       - name: Install dependencies
-        run: pip install --target . -r requirements.txt
+        run: |
+          pip install --target . -r requirements.txt
+          pip install -r requirements_dev.txt
 
       - name: Run tests
-        run: python tests.py
+        run: pytest
 
       - name: Create ZIP archive
         run: zip -r deployment.zip *

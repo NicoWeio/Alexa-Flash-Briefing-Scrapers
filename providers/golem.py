@@ -62,6 +62,3 @@ def get_single(url):
         'content': content,
         'is_golemplus': 'golemplus' in article.get('class', []),
     }
-
-
-print(get_single("https://www.golem.de/news/steamer-gamescom-reagiert-auf-tumulte-um-montana-black-2209-168032.html"))
