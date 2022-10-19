@@ -2,7 +2,7 @@ name: Deploy to Lambda
 
 on:
   push:
-    branches: [ master ]
+    branches: [main]
 
 jobs:
   build:
@@ -13,7 +13,10 @@ jobs:
       - uses: actions/setup-node@v1
 
       - name: Install dependencies
-        run: npm install
+        run: pip install --target . -r requirements.txt
+
+      - name: Run tests
+        run: python tests.py
 
       - name: Create ZIP archive
         run: zip -r deployment.zip *
