@@ -11,18 +11,29 @@ s = requests.Session()
 s.cookies['golem_consent20'] = 'cmp|220101'
 
 
-def get():
+def get(golemplus_filter=None):
     r = s.get(URL)
     r.raise_for_status()
     soup = BeautifulSoup(r.text, 'html.parser')
 
-    article_list = soup.find('ol', class_='list-articles')
-    # NOTE the <li> tags have an optional class "golemplus"
-    articles = article_list.find_all('li')
+    article_lists = soup.find_all('ol', class_='list-articles')
+    articles = [
+        article
+        for article_list in article_lists
+        for article in article_list.find_all('li', recursive=False)
+        # NOTE: Some <li> tags are not articles, but e.g. "Verlagsangebot[e]"
+        if 'data-article-id' in article.attrs
+    ]
+    print(f"Found {len(articles)} articles in total")
 
     article_urls = [
         article.find('header').find('a')['href']
         for article in articles
+        if (
+            golemplus_filter is None  # default: no filter
+            or
+            golemplus_filter == ('golemplus' in article.get('class', []))
+        )
     ]
 
     data = [
@@ -62,3 +73,7 @@ def get_single(url):
         'content': content,
         'is_golemplus': 'golemplus' in article.get('class', []),
     }
+
+
+if __name__ == '__main__':
+    print(get())
